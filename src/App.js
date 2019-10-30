@@ -4,12 +4,17 @@ import firebase from './config/firebase'
 
 import CatPic from "./components/CatPic"
 
-const AppContainer = styled.div`
+const AppRoot = styled.div`
   width: 100vw;
   height: 100vh;
+  background-color: #222222;
   overflow: hidden;
+`
+
+const AppContainer = styled.div`
   color: white;
   display: flex;
+  background-color: #222222;
 `
 
 const CatContainer = styled.div`
@@ -29,11 +34,47 @@ const CatContainer = styled.div`
   }
 `
 
+const WelcomeScreen = styled.div`
+  width: 100%;
+  background-color: #222222;
+  padding: 8em 0 2em;
+  text-align: center;
+  color: white;
+
+  div {
+    font-size: 4em;
+    letter-spacing: 20px;
+  }
+
+  span {
+    font-size: .8em;
+  }
+
+  .start {
+    font-size: 1.2em;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background-color: #131313;
+    width: 12%;
+    padding: 1em 0;
+    margin: 5em auto;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .4s;
+
+    :hover {
+      box-shadow: 0px 1px 20px rgba(255,255,255, .1);
+    }
+  }
+`
+
 class App extends React.Component {
 
   state = {
     data: [],
     dataLoaded: false,
+    displayApp: false,
     leftCat: "",
     rightCat: "",
     choosenCat: {
@@ -60,6 +101,7 @@ class App extends React.Component {
 
   Next = () => {
     const db = firebase.firestore()
+    this.setState({ displayApp: true })
 
     if (!!this.state.data && this.state.data.length > 0) {
       const index = this.state.data.length - 1
@@ -79,17 +121,27 @@ class App extends React.Component {
 
   render() {
 
-    const { dataLoaded, leftCat, rightCat } = this.state
+    const { dataLoaded, leftCat, rightCat, displayApp } = this.state
 
     return (
-      <AppContainer>
-        <CatContainer onClick={() => this.ChooseACat(leftCat)}>
-          {!!dataLoaded && <CatPic url={leftCat.imgUrl} />}
-        </CatContainer>
-        <CatContainer isRight onClick={() => this.ChooseACat(rightCat)}>
-          {!!dataLoaded && <CatPic url={rightCat.imgUrl} />}
-        </CatContainer>
-      </AppContainer>
+      <AppRoot>
+        {!!displayApp ?
+          <AppContainer>
+            <CatContainer onClick={() => this.ChooseACat(leftCat)}>
+              {!!dataLoaded && <CatPic url={leftCat.imgUrl} />}
+            </CatContainer>
+            <CatContainer isRight onClick={() => this.ChooseACat(rightCat)}>
+              {!!dataLoaded && <CatPic url={rightCat.imgUrl} />}
+            </CatContainer>
+          </AppContainer>
+        :
+          <WelcomeScreen>
+            <div>CATMASH</div>
+            <span> juste un workaround :)</span>
+            <div className="start" onClick={() => this.Next()}> start </div>
+          </WelcomeScreen>
+        }
+      </AppRoot>
     )
   }
 }
