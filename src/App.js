@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import firebase from './config/firebase'
+import { FiX } from "react-icons/fi";
 
 import CatPic from "./components/CatPic"
 
@@ -69,6 +70,50 @@ const WelcomeScreen = styled.div`
   }
 `
 
+const NoneButton = styled.div`
+  z-index: 3;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 65px) ;
+  height: 45px;
+  width: calc(65px * 2);
+  border-top-left-radius: calc(65px * 2);
+  border-top-right-radius: calc(65px * 2);
+  background-color: rgba(136, 70, 70, .5);
+  color: rgba(255,255,255, .6);
+  text-align: center;
+  font-size: 2.3em;
+  letter-spacing: 2px;
+  padding-top: .5em;
+  cursor: pointer;
+  transition: .3s;
+
+  :hover {
+    background-color: rgba(136, 70, 70, .8);
+    color: rgba(255,255,255, .9);
+  }
+
+  :before {
+    content: "both ugly";
+    display: block;
+    background-color: rgba(136, 70, 70, .8);
+    position: absolute;
+    padding: .4em 1em;
+    top: -30px;
+    left: 10px;
+    border-radius: 8px;
+    opacity: 0;
+    font-size: .5em;
+    letter-spacing: 1px;
+    transition: .3s;
+  }
+
+  :hover:before {
+    top: -38px;
+    opacity: 1;
+  }
+`
+
 class App extends React.Component {
 
   state = {
@@ -107,16 +152,25 @@ class App extends React.Component {
       const index = this.state.data.length - 1
       this.setState({ leftCat: this.state.data[index], rightCat: this.state.data[index - 1]})
       this.setState(prevState => ({ data: prevState.data.slice(0, index - 1)}))
-    }
-    if (!!this.state.choosenCat.id && this.state.choosenCat.id.length > 0){
-      db.collection("cats").doc(this.state.choosenCat.id).set({
-        vote: this.state.choosenCat.vote
-      }, { merge: true })
+
+      if (!!this.state.choosenCat.id){
+        db.collection("cats").doc(this.state.choosenCat.id).set({
+          vote: this.state.choosenCat.vote
+        }, { merge: true })
+      }
     }
   }
 
   ChooseACat = choosenCat => {
     this.setState({ choosenCat: { id: choosenCat.id, imgUrl: choosenCat.imgUrl, vote: choosenCat.vote + 1}}, () => this.Next())
+  }
+
+  NoVote = () => {
+    if (!!this.state.data && this.state.data.length > 0) {
+      const index = this.state.data.length - 1
+      this.setState({ leftCat: this.state.data[index], rightCat: this.state.data[index - 1]})
+      this.setState(prevState => ({ data: prevState.data.slice(0, index - 1)}))
+    }
   }
 
   render() {
@@ -131,8 +185,11 @@ class App extends React.Component {
               {!!dataLoaded && <CatPic url={leftCat.imgUrl} />}
             </CatContainer>
             <CatContainer isRight onClick={() => this.ChooseACat(rightCat)}>
-              {!!dataLoaded && <CatPic url={rightCat.imgUrl} />}
+              {!!dataLoaded && <CatPic url={rightCat.imgUrl} isRight />}
             </CatContainer>
+            <NoneButton onClick={() => this.NoVote()}>
+              <FiX />
+            </NoneButton>
           </AppContainer>
         :
           <WelcomeScreen>
@@ -148,7 +205,7 @@ class App extends React.Component {
 
 export default App
 
-
+// getting data from latelier to post it on firestore
 // const db = firebase.firestore()
 // const cats = db.collection('cats')
 // fetch('https://cors-anywhere.herokuapp.com/https://latelier.co/data/cats.json')

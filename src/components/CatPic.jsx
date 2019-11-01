@@ -9,8 +9,9 @@ const PicContainer = styled.div`
   background-image: url(${props => props.bgImage});
   background-position: center;
   background-repeat: no-repeat;
+  border: 10px solid ${props => props.isRight ? "#131313" : "#282828"};
   background-size:cover;
-  border: 7px solid #dddddd;
+
   animation: mounted 1s ease forwards;
 
   @keyframes mounted {
@@ -19,9 +20,9 @@ const PicContainer = styled.div`
   }
 `
 
-const CatPic = ({ url }) => {
+const CatPic = ({ url, isRight }) => {
   return (
-    <PicContainer bgImage={url} />
+    <PicContainer bgImage={url} isRight={isRight} />
   )
 }
 
