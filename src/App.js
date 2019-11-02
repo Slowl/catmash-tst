@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Router } from "@reach/router"
 
 import Vote from './pages/Vote'
+import VoteBoard from './pages/VoteBoard'
 
 const AppRoot = styled.div`
   width: 100vw;
@@ -16,6 +17,7 @@ const App = () => {
     <AppRoot>
       <Router>
         <Vote path="/" />
+        <VoteBoard path="/vote-board" />
       </Router>
     </AppRoot>
   )

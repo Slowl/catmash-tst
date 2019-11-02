@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const PicContainer = styled.div`
   width: ${props => props.picSize};
@@ -31,5 +32,13 @@ const CatPic = ({ url, isRight, size, largeBorder }) => {
     <PicContainer bgImage={url} isRight={isRight} picSize={size} largeBorder={largeBorder}/>
   )
 }
+
+CatPic.propTypes = {
+  url: PropTypes.string,
+  isRight: PropTypes.bool,
+  size: PropTypes.string,
+  largeBorder: PropTypes.bool
+}
+
 
 export default CatPic
