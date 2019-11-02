@@ -2,15 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 
 const PicContainer = styled.div`
-  width: 18em;
-  height: 18em;
+  width: ${props => props.picSize};
+  height: ${props => props.picSize};
   border-radius: 300px;
   background-color: transparent;
   background-image: url(${props => props.bgImage});
   background-position: center;
   background-repeat: no-repeat;
-  border: 10px solid ${props => props.isRight ? "#131313" : "#282828"};
+  border: ${props => props.largeBorder ? "10px" : "3px"} solid ${props => props.isRight ? "#131313" : "#282828"};
   background-size:cover;
+  flex-shrink: 0;
 
   animation: mounted 1s ease forwards;
 
@@ -20,9 +21,14 @@ const PicContainer = styled.div`
   }
 `
 
-const CatPic = ({ url, isRight }) => {
+PicContainer.defaultProps = {
+  picSize: '18em',
+  largeBorder: true,
+}
+
+const CatPic = ({ url, isRight, size, largeBorder }) => {
   return (
-    <PicContainer bgImage={url} isRight={isRight} />
+    <PicContainer bgImage={url} isRight={isRight} picSize={size} largeBorder={largeBorder}/>
   )
 }
 
