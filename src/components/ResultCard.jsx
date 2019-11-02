@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import CatPic from './CatPic'
 
 const CardContainer = styled.div`
@@ -41,15 +42,25 @@ const CatInfo = styled.div`
 const ResultCard = ({ imgUrl, name, votes, order }) => {
   return (
     <CardContainer catOrder={order}>
-      <CatPic url={imgUrl}
-      size="6em"
-      largeBorder={false} />
+      <CatPic
+        url={imgUrl}
+        size="6em"
+        largeBorder={false}
+      />
       <CatInfo>
         <div className="name"> {name} </div>
         <div className="score"> {votes} votes </div>
       </CatInfo>
     </CardContainer>
   )
+}
+
+
+ResultCard.propTypes = {
+  imgUrl: PropTypes.string,
+  name: PropTypes.string,
+  votes: PropTypes.number,
+  order: PropTypes.number
 }
 
 export default ResultCard
