@@ -77,7 +77,7 @@ const NoneButton = styled.div`
   }
 
   :hover:before {
-    top: -38px;
+    top: -43px;
     opacity: 1;
   }
 `

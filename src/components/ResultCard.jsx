@@ -18,7 +18,7 @@ const CardContainer = styled.div`
   width: 90%;
   margin: 1em auto;
   padding: 1em;
-  border-radius: 12px;
+  border-radius: 80px;
   display: flex;
   align-items: center;
   flex-shrink: 0;
