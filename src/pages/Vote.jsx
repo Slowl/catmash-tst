@@ -3,9 +3,7 @@ import styled from 'styled-components'
 import firebase from '../config/firebase'
 import { FiX } from "react-icons/fi"
 import { Link } from "@reach/router"
-
 import CatPic from "../components/CatPic"
-
 
 const AppContainer = styled.div`
   color: white;
@@ -27,41 +25,6 @@ const CatContainer = styled.div`
 
   :hover {
     transform: scale(1.03);
-  }
-`
-
-const WelcomeScreen = styled.div`
-  width: 100%;
-  background-color: #222222;
-  padding: 8em 0 2em;
-  text-align: center;
-  color: white;
-
-  div {
-    font-size: 4em;
-    letter-spacing: 20px;
-  }
-
-  span {
-    font-size: .8em;
-  }
-
-  .start {
-    font-size: 1.2em;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    background-color: #131313;
-    width: 12%;
-    padding: 1em 0;
-    margin: 5em auto;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: .4s;
-
-    :hover {
-      box-shadow: 0px 1px 20px rgba(255,255,255, .1);
-    }
   }
 `
 
@@ -146,21 +109,6 @@ class Vote extends React.Component {
     },
   }
 
-  componentDidMount() {
-    const db = firebase.firestore()
-    const cats = db.collection('cats')
-
-    cats.get()
-    .then((querySnapshot) => {
-      let allCats = []
-      querySnapshot.forEach((cat) => {
-        const reqData = cat.data()
-        allCats.push(reqData)
-      })
-      this.setState({ data : allCats, dataLoaded: true, })
-    })
-  }
-
   Next = () => {
     const db = firebase.firestore()
     this.setState({ displayApp: true })
@@ -176,6 +124,21 @@ class Vote extends React.Component {
         }, { merge: true })
       }
     }
+  }
+
+  componentDidMount() {
+    const db = firebase.firestore()
+    const cats = db.collection('cats')
+
+    cats.get()
+    .then((querySnapshot) => {
+      let allCats = []
+      querySnapshot.forEach((cat) => {
+        const reqData = cat.data()
+        allCats.push(reqData)
+      })
+      this.setState({ data : allCats, dataLoaded: true, }, () => this.Next())
+    })
   }
 
   ChooseACat = choosenCat => {
@@ -195,28 +158,18 @@ class Vote extends React.Component {
     const { dataLoaded, leftCat, rightCat, displayApp } = this.state
 
     return (
-      <div>
-        {!!displayApp ?
-          <AppContainer>
-            <SeeVotesButton to="/vote-board"> See the cutest cats </SeeVotesButton>
-            <CatContainer onClick={() => this.ChooseACat(leftCat)}>
-              {!!dataLoaded && <CatPic url={leftCat.imgUrl} />}
-            </CatContainer>
-            <CatContainer isRight onClick={() => this.ChooseACat(rightCat)}>
-              {!!dataLoaded && <CatPic url={rightCat.imgUrl} isRight />}
-            </CatContainer>
-            <NoneButton onClick={() => this.NoVote()}>
-              <FiX />
-            </NoneButton>
-          </AppContainer>
-        :
-          <WelcomeScreen>
-            <div>CATMASH</div>
-            <span> juste un workaround :)</span>
-            <div className="start" onClick={() => this.Next()}> start </div>
-          </WelcomeScreen>
-        }
-      </div>
+      <AppContainer>
+        <SeeVotesButton to="/vote-board"> See the cutest cats </SeeVotesButton>
+        <CatContainer onClick={() => this.ChooseACat(leftCat)}>
+          {!!dataLoaded && <CatPic url={leftCat.imgUrl} />}
+        </CatContainer>
+        <CatContainer isRight onClick={() => this.ChooseACat(rightCat)}>
+          {!!dataLoaded && <CatPic url={rightCat.imgUrl} isRight />}
+        </CatContainer>
+        <NoneButton onClick={() => this.NoVote()}>
+          <FiX />
+        </NoneButton>
+      </AppContainer>
     )
   }
 }
