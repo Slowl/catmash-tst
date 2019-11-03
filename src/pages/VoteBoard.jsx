@@ -144,14 +144,14 @@ class VoteBoard extends React.Component {
   }
 
   render(){
-    const {data, isLoading} = this.state
+    const { data, isLoading } = this.state
     return (
       <div>
-        <Navbar onClick={ () => window.history.back()}> <FiChevronLeft /> Back to votes </Navbar>
+        <Navbar onClick={() => window.history.back()}> <FiChevronLeft /> Back to votes </Navbar>
         <BoardContainer>
           {!isLoading ? (
-            <div>{data.map((cat, key) => <ResultCard key={cat.id} imgUrl={cat.imgUrl} name={cat.id} votes={cat.vote} order={key} />) }</div>
-          ): (
+            <div>{data.map((cat, key) => <ResultCard key={cat.id} imgUrl={cat.imgUrl} name={cat.id} votes={cat.vote} order={key} />)}</div>
+          ):(
             <Loading>Loading data </Loading>
           )}
         </BoardContainer>

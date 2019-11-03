@@ -6,7 +6,6 @@ const PicContainer = styled.div`
   width: ${props => props.picSize};
   height: ${props => props.picSize};
   border-radius: 300px;
-  background-color: transparent;
   background-image: url(${props => props.bgImage});
   background-position: center;
   background-repeat: no-repeat;

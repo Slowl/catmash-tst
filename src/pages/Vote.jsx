@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import firebase from '../config/firebase'
-import { FiX, FiChevronRight } from "react-icons/fi"
-import { Link } from "@reach/router"
-import CatPic from "../components/CatPic"
+import { FiX, FiChevronRight } from 'react-icons/fi'
+import { Link } from '@reach/router'
+import CatPic from '../components/CatPic'
 
 const AppContainer = styled.div`
   color: white;
@@ -51,7 +51,6 @@ const NoneButton = styled.div`
   color: rgba(255,255,255, .6);
   text-align: center;
   font-size: 2.3em;
-  letter-spacing: 2px;
   padding-top: .5em;
   cursor: pointer;
   transition: .3s;
@@ -96,7 +95,6 @@ const SeeVotesButton = styled(Link)`
   background-color: rgba(136, 70, 70, .8);
   color: rgba(255,255,255, .6);
   border-radius: 0 0 10px 10px;
-  text-align: center;
   text-decoration: none;
   font-size: 1.2em;
   letter-spacing: 1px;
@@ -118,9 +116,8 @@ class Vote extends React.Component {
   state = {
     data: [],
     dataLoaded: false,
-    displayApp: false,
-    leftCat: "",
-    rightCat: "",
+    leftCat: {},
+    rightCat: {},
     choosenCat: {
       id: "",
       imgUrl:"",
@@ -130,7 +127,6 @@ class Vote extends React.Component {
 
   Next = () => {
     const db = firebase.firestore()
-    this.setState({ displayApp: true })
 
     if (!!this.state.data && this.state.data.length > 0) {
       const index = this.state.data.length - 1
@@ -174,7 +170,7 @@ class Vote extends React.Component {
 
   render() {
 
-    const { dataLoaded, leftCat, rightCat, displayApp } = this.state
+    const { dataLoaded, leftCat, rightCat } = this.state
 
     return (
       <AppContainer>
