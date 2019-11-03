@@ -31,10 +31,10 @@ const BoardContainer = styled.div`
     border: 0px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(0,0,0, .15);
+    background: rgba(255,255,255, .25);
   }
   ::-webkit-scrollbar-thumb:active {
-    background: rgba(0,0,0, .15);
+    background: rgba(255,255,255, .25);
   }
   ::-webkit-scrollbar-track {
     background: rgba(0,0,0,0);
@@ -86,7 +86,6 @@ const Loading = styled.div`
 `
 
 const Navbar = styled.nav`
-  padding: .5em;
   padding: .8em;
   font-size: 1.2em;
   letter-spacing: 1px;

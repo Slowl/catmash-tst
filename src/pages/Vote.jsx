@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import firebase from '../config/firebase'
-import { FiX } from "react-icons/fi"
+import { FiX, FiChevronRight } from "react-icons/fi"
 import { Link } from "@reach/router"
 import CatPic from "../components/CatPic"
 
@@ -54,11 +54,12 @@ const NoneButton = styled.div`
   :before {
     content: "both ugly";
     display: block;
+    width: 100%;
     background-color: rgba(136, 70, 70, .8);
     position: absolute;
     padding: .4em 1em;
     top: -30px;
-    left: 10px;
+    left: -15px;
     border-radius: 8px;
     opacity: 0;
     font-size: .5em;
@@ -75,10 +76,13 @@ const NoneButton = styled.div`
 const SeeVotesButton = styled(Link)`
   z-index: 4;
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 18em;
   top: 0;
   left: calc(50% - (18em / 2));
-  padding: .7em 0;
+  padding: .8em;
   background-color: rgba(136, 70, 70, .8);
   color: rgba(255,255,255, .6);
   border-radius: 0 0 10px 10px;
@@ -91,6 +95,11 @@ const SeeVotesButton = styled(Link)`
   :hover {
     background-color: rgba(136, 70, 70, 1);
     color: rgba(255,255,255, .9);
+  }
+
+  svg {
+    font-size: 1.4em;
+    padding-left: .2em;
   }
 `
 
@@ -159,7 +168,7 @@ class Vote extends React.Component {
 
     return (
       <AppContainer>
-        <SeeVotesButton to="/vote-board"> See the cutest cats </SeeVotesButton>
+        <SeeVotesButton to="/vote-board"> See the cutest cats <FiChevronRight /> </SeeVotesButton>
         <CatContainer onClick={() => this.ChooseACat(leftCat)}>
           {!!dataLoaded && <CatPic url={leftCat.imgUrl} />}
         </CatContainer>
