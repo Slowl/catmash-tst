@@ -2,15 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import ResultCard from '../components/ResultCard'
 import firebase from '../config/firebase'
+import { FiChevronLeft } from 'react-icons/fi'
 
 const BoardContainer = styled.div`
   background-color: #131313;
   width: 35vw;
-  height: 85vh;
-  min-height: 85vh;
-  max-height: 85vh;
+  height: 80vh;
+  min-height: 80vh;
+  max-height: 80vh;
   overflow-y: auto;
-  margin: 3em auto;
+  margin: 1em auto;
   padding: 1em;
   border: 10px solid #131313;
   border-radius: 10px;
@@ -84,6 +85,32 @@ const Loading = styled.div`
   }
 `
 
+const Navbar = styled.nav`
+  padding: .5em;
+  padding: .8em;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+  color: rgba(255,255,255, .7);
+  display: flex;
+  width: 15%;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 10px 10px;
+  cursor: pointer;
+  transition: .3s;
+
+  svg {
+    font-size: 1.5em;
+    padding-right: .3em;
+  }
+
+  :hover {
+    background-color: #131313;
+      color: rgba(255,255,255, 1);
+  }
+  `
+
 class VoteBoard extends React.Component {
 
   state = {
@@ -109,14 +136,16 @@ class VoteBoard extends React.Component {
   render(){
     const {data, isLoading} = this.state
     return (
-      <BoardContainer>
-        {!isLoading ? (
-          <div>{data.map((cat, key) => <ResultCard key={cat.id} imgUrl={cat.imgUrl} name={cat.id} votes={cat.vote} order={key} />) }</div>
-        ): (
-          <Loading>Loading data </Loading>
-        )}
-      </BoardContainer>
-
+      <div>
+        <Navbar onClick={ () => window.history.back()}> <FiChevronLeft /> Back to votes </Navbar>
+        <BoardContainer>
+          {!isLoading ? (
+            <div>{data.map((cat, key) => <ResultCard key={cat.id} imgUrl={cat.imgUrl} name={cat.id} votes={cat.vote} order={key} />) }</div>
+          ): (
+            <Loading>Loading data </Loading>
+          )}
+        </BoardContainer>
+      </div>
     )
   }
 }
