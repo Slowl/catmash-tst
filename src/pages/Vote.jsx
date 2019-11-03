@@ -9,6 +9,11 @@ const AppContainer = styled.div`
   color: white;
   display: flex;
   background-color: #222222;
+
+  @media screen and (max-width: 45em) {
+   flex-direction: column;
+   align-items: center;
+ }
 `
 
 const CatContainer = styled.div`
@@ -25,6 +30,11 @@ const CatContainer = styled.div`
 
   :hover {
     transform: scale(1.03);
+  }
+
+  @media screen and (max-width: 45em) {
+    width: 100vw;
+    height: 50vh;
   }
 `
 

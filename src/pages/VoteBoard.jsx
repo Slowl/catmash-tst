@@ -49,6 +49,13 @@ const BoardContainer = styled.div`
   ::-webkit-scrollbar-corner {
     background: transparent;
   }
+
+  @media screen and (max-width: 45em) {
+    width: 80vw;
+    height: 75vh;
+    min-height: 75vh;
+    max-height: 75vh;
+  }
 `
 
 const Loading = styled.div`
@@ -107,6 +114,10 @@ const Navbar = styled.nav`
   :hover {
     background-color: #131313;
       color: rgba(255,255,255, 1);
+  }
+
+  @media screen and (max-width: 45em) {
+    width: 50%;
   }
   `
 
